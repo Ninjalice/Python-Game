@@ -1,5 +1,19 @@
 import pygame
 import random
+import Flota
+
+
+M = Flota.hacer_mat(10)
+Flota.mostrar(M)
+M = Flota.colocar_barcos(M, [[1, 2],[7, 9], [2, 5], [1, 3], [1, 4], [1, 5], [9, 9], [8, 9], [1, 6]])
+Flota.mostrar(M)
+L = Flota.crear_barcos(M)
+print(L)
+E = Flota.detectar_errores(M, L)
+print(E)
+M = Flota.disparar(M, 2, 2)
+Flota.mostrar(M)
+
 
 blueP = (20, 34, 238)
 greenP = (20, 240, 50)
