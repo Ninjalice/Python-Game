@@ -5,19 +5,12 @@ import Flota
 
 M = Flota.hacer_mat(10)
 Flota.mostrar(M)
-M = Flota.colocar_barcos(M, [[1, 2],[7, 9], [2, 5], [1, 3], [1, 4], [1, 5], [9, 9], [8, 9], [1, 6]])
-Flota.mostrar(M)
-L = Flota.crear_barcos(M)
-print(L)
-E = Flota.detectar_errores(M, L)
-print(E)
-M = Flota.disparar(M, 2, 2)
-Flota.mostrar(M)
 
 
 blueP = (20, 34, 238)
 greenP = (20, 240, 50)
 redP = (230, 0, 20)
+yel = (255, 255, 0)
 BLACK = (0, 0, 0)
 sizeSquare = 60
 
@@ -27,6 +20,8 @@ my = 0
 clas_x = 0
 clas_y = 0
 
+Start = False
+Done = False
 barcos = []
 barcos_enem = []
 num_of_cubes = 10
@@ -85,18 +80,41 @@ while not gameOver:
 
     if mouse_buttons[0] == True:
         mouse_pos = pygame.mouse.get_pos()
-        clas_y = 0
-        clas_x = 0
         mx = mouse_pos[0]
         my = mouse_pos[1]
+        clas_y = 0
+        clas_x = 0
+
         while mx > 60:
             mx = mx - 60
             clas_x = clas_x + 1
         while my> 60:
             my = my - 60
             clas_y = clas_y + 1
-        if [clas_x, clas_y] not in barcos:
-            barcos.append([clas_x, clas_y])
+
+        if Start == True:
+            M = Flota.disparar(M, clas_x, clas_y)
+            Flota.mostrar(M)
+
+        if  Done == False:
+            if [clas_x, clas_y] not in barcos:
+                barcos.append([clas_x, clas_y])
+
+    if pygame.key.get_pressed()[pygame.K_RETURN]:
+        Done = True
+        Start = True
+        M = Flota.colocar_barcos(M, barcos)
+        Flota.mostrar(M)
+        L = Flota.crear_barcos(M)
+        print(L)
+        E = Flota.detectar_errores(M, L)
+        print(E)
+        Flota.mostrar(M)
+
+    if pygame.key.get_pressed()[pygame.K_DELETE]:
+        Done = False
+        Start = False
+        barcos = []
 
     #Delete boats
     if mouse_buttons[2] == True:
@@ -114,10 +132,20 @@ while not gameOver:
         if [clas_x, clas_y] in barcos:
             barcos.remove([clas_x, clas_y])
     #Mostrar barcos
-    for i in range(len(barcos)):
-        pygame.draw.rect(screen, greenP, [barcos[i][0]* cube_size + 1, barcos[i][1]* cube_size + 1, 58, 58], 0)
-    for i in range(len(barcos_enem)):
-        pygame.draw.rect(screen, redP, [barcos_enem[i][0]* cube_size + 1, barcos_enem[i][1]* cube_size + 1, 58, 58], 0)
+    for i in range(len(M)):
+        for j in range(len(M[i])):
+            if M[i][j] == '~':
+                pygame.draw.rect(screen, yel, [j* cube_size + 1, i* cube_size + 1, 58, 58], 0)
+            if M[i][j] == 'x':
+                pygame.draw.rect(screen, redP, [j* cube_size + 1, i* cube_size + 1, 58, 58], 0)
+            if M[i][j] == '1':
+                pygame.draw.rect(screen, greenP, [j* cube_size + 1, i* cube_size + 1, 58, 58], 0)
+                
+    if Start == False:
+        for i in range(len(barcos)):
+            pygame.draw.rect(screen, greenP, [barcos[i][0]* cube_size + 1, barcos[i][1]* cube_size + 1, 58, 58], 0)
+    #for i in range(len(barcos_enem)):
+        #pygame.draw.rect(screen, redP, [barcos_enem[i][0]* cube_size + 1, barcos_enem[i][1]* cube_size + 1, 58, 58], 0)
 
     pygame.display.flip()
     clock.tick(60)
