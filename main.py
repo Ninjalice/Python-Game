@@ -101,8 +101,6 @@ while not gameOver:
                 barcos.append([clas_x, clas_y])
 
     if pygame.key.get_pressed()[pygame.K_RETURN]:
-        Done = True
-        Start = True
         M = Flota.colocar_barcos(M, barcos)
         Flota.mostrar(M)
         L = Flota.crear_barcos(M)
@@ -110,6 +108,14 @@ while not gameOver:
         E = Flota.detectar_errores(M, L)
         print(E)
         Flota.mostrar(M)
+
+        if E == 0:
+            Done = False
+            Start = True
+        else:
+            print("Fallaste")
+            M = Flota.hacer_mat(10)
+            Flota.mostrar(M)
 
     if pygame.key.get_pressed()[pygame.K_DELETE]:
         Done = False
@@ -138,9 +144,9 @@ while not gameOver:
                 pygame.draw.rect(screen, yel, [j* cube_size + 1, i* cube_size + 1, 58, 58], 0)
             if M[i][j] == 'x':
                 pygame.draw.rect(screen, redP, [j* cube_size + 1, i* cube_size + 1, 58, 58], 0)
-            if M[i][j] == '1':
+            if M[i][j] == '1' and Start == False:
                 pygame.draw.rect(screen, greenP, [j* cube_size + 1, i* cube_size + 1, 58, 58], 0)
-                
+
     if Start == False:
         for i in range(len(barcos)):
             pygame.draw.rect(screen, greenP, [barcos[i][0]* cube_size + 1, barcos[i][1]* cube_size + 1, 58, 58], 0)
