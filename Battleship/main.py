@@ -51,8 +51,6 @@ cube_size= int(size[1]/num_of_cubes)
 line_thikness = 2
 line_cube = cube_size - line_thikness
 
-
-
 #Game initializes
 pygame.init()
 

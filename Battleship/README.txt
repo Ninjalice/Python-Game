@@ -19,4 +19,6 @@ Thanks for playing our game! We hope you enjoy our game!
     (you shouldn't see your enemy's fleet). We trust on player's honesty!!!
 9. You win once you have hit all enemy's boats.
 10. Enjoy the game!!
-Please if you see any error contact us. 
+Please if you see any error contact us.
+
+Made by Odei  T, Odei H and Endika
