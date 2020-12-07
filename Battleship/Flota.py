@@ -1,5 +1,6 @@
 
-def hacer_mat(n): #Crea la matriz tamaño n
+def hacer_mat(n): #Crea la matriz tamaño n HOLA
+    
     M = []
     for i in range(n):
         a = ['o'] * n
