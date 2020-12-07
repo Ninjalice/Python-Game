@@ -27,7 +27,7 @@ color_green = (20, 240, 50)
 color_red = (230, 0, 20)
 color_yellow = (255, 255, 0)
 color_black = (0, 0, 0)
-color_purple = (87, 35, 100)
+color_white = (255, 255, 255)
 
 #Other variables for the game
 mx = 0
@@ -64,9 +64,9 @@ gameOver = False
 text_font = pygame.font.Font('Alice and the Wicked Monster.ttf', 16)
 important_font = pygame.font.SysFont('Alice and the Wicked Monster.ttf', 100)
 
-Text_player1_won = important_font.render("Player 1 Won", True, color_green)
-Text_player2_won = important_font.render("Player 2 Won", True, color_green)
-Text_change_player = important_font.render("Change player", True, color_yellow)
+Text_player1_won = important_font.render("Player 1 Wins", True, color_white)
+Text_player2_won = important_font.render("Player 2 Wins", True, color_white)
+Text_change_player = important_font.render("Change player", True, color_white)
 
 while not gameOver:
 
@@ -254,10 +254,13 @@ while not gameOver:
             pygame.draw.rect(screen, color_green, [(player2_boats[i][0]+11)* cube_size + 1, player2_boats[i][1]* cube_size + 1, 58, 58], 0)
 
     if game_started == True and Boats_on_float_player1 == []:
+        screen.fill(color_black)
         screen.blit(Text_player2_won, (350,300))
     if game_started == True and Boats_on_float_player2 == []:
+        screen.fill(color_black)
         screen.blit(Text_player1_won, (350,300))
     if player_turn == -1 or player_turn == -2:
+        screen.fill(color_black)
         screen.blit(Text_change_player, (350,300))
 
     pygame.display.flip()
