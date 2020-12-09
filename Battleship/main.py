@@ -51,6 +51,7 @@ cube_size= int(size[1]/num_of_cubes)
 line_thikness = 2
 line_cube = cube_size - line_thikness
 
+Error_state = False
 
 
 #Game initializes
@@ -63,10 +64,13 @@ gameOver = False
 
 text_font = pygame.font.Font('Alice and the Wicked Monster.ttf', 16)
 important_font = pygame.font.SysFont('Alice and the Wicked Monster.ttf', 100)
+error_font = pygame.font.SysFont('Alice and the Wicked Monster.ttf', 35)
 
 Text_player1_won = important_font.render("Player 1 Won", True, color_green)
 Text_player2_won = important_font.render("Player 2 Won", True, color_green)
 Text_change_player = important_font.render("Change player", True, color_yellow)
+Text_error = error_font.render("You did not placed the boats correctly please try again.", True, color_yellow)
+Text_change_player_please = error_font.render("Change player please!", True, color_yellow)
 
 while not gameOver:
 
@@ -123,16 +127,21 @@ while not gameOver:
             if player_turn == 0 and clas_x > 10: #This part shows the board of the second player while the first player attacks
                 Mat_player_2,Boats_on_float_player2,player_boat_touch = Flota.disparar(Mat_player_2, clas_x - 11, clas_y,Boats_on_float_player2)
                 Flota.mostrar(Mat_player_2)
+                #Plays the sound of the miss or the hit
+                if player_boat_touch:
+                    channel2.play(sound_touch)
+                else:                    
+                    channel2.play(sound_miss)
 
             #This part shows the board of the first player while the second player attacks
             elif player_turn == 1 and clas_x < 10:
                 Mat_player_1 , Boats_on_float_player1 , player_boat_touch = Flota.disparar(Mat_player_1, clas_x, clas_y,Boats_on_float_player1)
                 Flota.mostrar(Mat_player_1)
-            #Plays the sound of the miss or the hit
-            if player_boat_touch:
-                channel2.play(sound_touch)
-            else:
-                channel2.play(sound_miss)
+                #Plays the sound of the miss or the hit
+                if player_boat_touch:
+                    channel2.play(sound_touch)
+                else:
+                    channel2.play(sound_miss)
             print("TURN: ",player_turn)
         #This part is for adding the boats
         else:
@@ -164,7 +173,7 @@ while not gameOver:
     if pygame.key.get_pressed()[pygame.K_SPACE] ==False:
         space_pressed = False
 
-    if pygame.key.get_pressed()[pygame.K_RETURN] and return_pressed != True:
+    if pygame.key.get_pressed()[pygame.K_RETURN] and return_pressed != True and game_started == False:
         return_pressed = True
         #Inputs the boats of the boats of the first player, checks if there is any error and shows the board.
         if player_turn == 0:
@@ -177,10 +186,12 @@ while not gameOver:
             Flota.mostrar(Mat_player_1)
 
             if Error_player1 != 0:
+                Error_state = True
                 print("Miss of player 1")
                 Mat_player_1 = Flota.hacer_mat(10)
                 Flota.mostrar(Mat_player_1)
             else:
+                Error_state = False
                 player1_boats = []
                 player_turn = -1
         #Inputs the boats of the boats of the second player, checks if there is any error and shows the board.
@@ -194,10 +205,12 @@ while not gameOver:
             Flota.mostrar(Mat_player_2)
             #If there is an error the matrix is restarted
             if Error_player2 != 0:
+                Error_state = True
                 print("Miss of player 2")
                 Mat_player_2 = Flota.hacer_mat(10)
                 Flota.mostrar(Mat_player_2)
             else:
+                Error_state = False
                 player2_boats = []
                 player_turn = -2
                 game_started = True
@@ -254,12 +267,17 @@ while not gameOver:
             pygame.draw.rect(screen, color_green, [(player2_boats[i][0]+11)* cube_size + 1, player2_boats[i][1]* cube_size + 1, 58, 58], 0)
 
     if game_started == True and Boats_on_float_player1 == []:
+        screen.fill(color_black)
         screen.blit(Text_player2_won, (350,300))
     if game_started == True and Boats_on_float_player2 == []:
+        screen.fill(color_black)
         screen.blit(Text_player1_won, (350,300))
     if player_turn == -1 or player_turn == -2:
+        screen.fill(color_black)
         screen.blit(Text_change_player, (350,300))
-
+    if Error_state == True:
+        screen.blit(Text_error, (20,20))
+    print("ERROR STATE",Error_state)
     pygame.display.flip()
     clock.tick(12)
 
