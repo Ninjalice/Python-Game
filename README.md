@@ -1,8 +1,8 @@
-### Battleship game created using Python <br>
+# Battleship game created using Python <br>
 
 Created using pygame and numpy<br><br>
 Uses a Float.py file with all the important functions<br><br><br>
-# How to play <br><br>
+## How to play <br><br>
 
 1. This game is designed for two players.
 2. The first player starts on the left side.
