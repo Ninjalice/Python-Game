@@ -2,6 +2,8 @@
 
 Created using pygame and numpy<br><br>
 Uses a Float.py file with all the important functions<br><br><br>
+![alt text](project_image.jpg)
+
 ## How to play <br><br>
 
 1. This game is designed for two players.
