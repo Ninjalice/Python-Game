@@ -1,7 +1,7 @@
 # Battleship game created using Python <br>
 
 Created using pygame and numpy<br><br>
-Uses a Float.py file with all the important functions<br><br><br>
+Uses a Flota.py file with all the important functions<br><br><br>
 ![alt text](project_image.jpg)
 
 ## How to play <br><br>
